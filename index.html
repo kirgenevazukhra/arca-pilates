@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARCA — студия пилатеса на реформерах</title>
+<meta name="description" content="ARCA — камерная студия пилатеса на реформерах. Свет, форма, дыхание.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --cream-0:#FBF8F3; --sand-100:#F3EDE3; --sand-200:#E8DFD1; --sand-300:#D9CDBB;
+  --taupe-500:#B39E86; --taupe-700:#7E6B58; --umber-900:#3E342C; --ink:#26201B;
+  --halo:#F5D9A6; --halo-soft:#FBEBCB; --clay:#C8A27B;
+  --serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --container:min(1320px,92vw);
+  --section:clamp(96px,12vw,180px);
+  --arch:999px 999px 0 0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);font-weight:300;color:var(--umber-900);
+  background:var(--cream-0);line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--halo);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.container{width:var(--container);margin-inline:auto}
+.eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe-500);font-weight:500}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:300;line-height:1;letter-spacing:-.01em;color:var(--ink)}
+h2{font-size:clamp(2.4rem,5vw,4.5rem);text-wrap:balance}
+h3{font-size:clamp(1.6rem,2.4vw,2.2rem)}
+em{font-style:italic;color:var(--taupe-700)}
+p.lead{font-size:clamp(1.05rem,1.4vw,1.25rem);max-width:38ch;color:var(--taupe-700)}
+.btn{
+  display:inline-flex;align-items:center;gap:.7em;padding:.95em 1.8em;
+  border-radius:999px;border:1px solid var(--umber-900);background:transparent;cursor:pointer;
+  font-family:var(--sans);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  color:var(--ink);transition:background .4s var(--ease),color .4s var(--ease),transform .4s var(--ease);
+}
+.btn:hover{background:var(--umber-900);color:var(--cream-0);transform:translateY(-2px)}
+.btn:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+.btn.solid{background:var(--umber-900);color:var(--cream-0)}
+.btn.solid:hover{background:var(--ink)}
+.btn .dot{width:6px;height:6px;border-radius:50%;background:var(--clay)}
+
+/* ============ PRELOADER ============ */
+.loader{position:fixed;inset:0;z-index:100;background:var(--cream-0);display:grid;place-items:center;transition:opacity .8s var(--ease),visibility .8s}
+.loader.done{opacity:0;visibility:hidden}
+.loader .word{font-family:var(--serif);font-size:clamp(3rem,10vw,7rem);letter-spacing:.12em;color:var(--ink);display:flex;position:relative}
+.loader .word span{opacity:0;transform:translateY(20px);animation:letter .9s var(--ease) forwards}
+.loader .word span:nth-child(1){animation-delay:.1s}
+.loader .word span:nth-child(2){animation-delay:.2s}
+.loader .word span:nth-child(3){animation-delay:.3s}
+.loader .word span:nth-child(4){animation-delay:.4s}
+@keyframes letter{to{opacity:1;transform:none}}
+.loader .halo{position:absolute;width:min(60vw,420px);aspect-ratio:1/1.4;border-radius:var(--arch);background:radial-gradient(60% 50% at 50% 60%,var(--halo-soft),transparent 70%);animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
+
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:clamp(18px,2.4vw,30px) 4vw;transition:background .5s var(--ease),backdrop-filter .5s}
+.nav.scrolled{background:rgba(251,248,243,.82);backdrop-filter:blur(12px)}
+.logo{font-family:var(--serif);font-size:1.6rem;letter-spacing:.22em;color:var(--ink);font-weight:400}
+.logo small{display:block;font-family:var(--sans);font-size:.55rem;letter-spacing:.3em;color:var(--taupe-500);margin-top:2px;font-weight:500}
+.nav ul{display:flex;gap:2.6vw;list-style:none}
+.nav ul a{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;position:relative}
+.nav ul a::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:1px;background:var(--clay);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:820px){.nav ul{display:none}.nav .btn{padding:.8em 1.2em;font-size:.68rem}}
+
+/* ============ HERO: real interior photo, slow Ken Burns + cursor parallax ============ */
+.hero{position:relative;min-height:min(100svh,1000px);display:grid;align-items:start;padding:clamp(110px,17vh,180px) 0 clamp(40px,6vh,80px);overflow:hidden;background:var(--sand-200)}
+.hero-photo{position:absolute;inset:0;overflow:hidden}
+.hero-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:55% 62%;
+  transform:scale(1.1);transform-origin:55% 62%;animation:kb 9s var(--ease) forwards, drift 22s ease-in-out 9s infinite alternate;
+  will-change:transform;
+}
+@keyframes kb{to{transform:scale(1)}}
+@keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.03) translate(-.6%,.4%)}}
+.hero-par{position:absolute;inset:0;transform:translate3d(var(--px,0),var(--py,0),0);transition:transform 1.4s var(--ease);pointer-events:none}
+.hero-veil{position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(251,248,243,.66) 0%,rgba(251,248,243,.3) 28%,rgba(251,248,243,0) 50%),
+    linear-gradient(0deg,rgba(251,248,243,.7) 0%,rgba(251,248,243,0) 22%),
+    linear-gradient(180deg,rgba(251,248,243,.22) 0%,rgba(251,248,243,0) 20%);
+}
+.hero-glow{position:absolute;left:38%;top:26%;width:min(46vw,620px);aspect-ratio:1/1.3;border-radius:var(--arch);pointer-events:none;
+  box-shadow:0 0 120px 10px rgba(245,217,166,.35);opacity:.6;animation:breathe 7s ease-in-out infinite;mix-blend-mode:screen}
+.hero-text{position:relative;z-index:2}
+.hero h1{font-size:clamp(5.2rem,19vw,17rem);letter-spacing:.06em;line-height:.85;color:var(--ink);font-weight:300;display:flex}
+.hero h1 span{display:inline-block;opacity:0;transform:translateY(40px);animation:rise 1.2s var(--ease) forwards}
+.hero h1 span:nth-child(1){animation-delay:1.2s}.hero h1 span:nth-child(2){animation-delay:1.3s}
+.hero h1 span:nth-child(3){animation-delay:1.4s}.hero h1 span:nth-child(4){animation-delay:1.5s}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero-sub{display:flex;flex-direction:column;align-items:flex-start;gap:1.6rem;margin-top:1.8rem;max-width:34ch;opacity:0;animation:rise 1.2s var(--ease) 1.8s forwards}
+.hero-sub .tag{font-family:var(--serif);font-size:clamp(1.3rem,2.2vw,2rem);font-style:italic;color:var(--taupe-700);max-width:22ch;line-height:1.2}
+.scroll-hint{position:absolute;right:4vw;bottom:5vh;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe-700)}
+.scroll-hint i{width:1px;height:56px;background:var(--taupe-700);animation:line 2.2s var(--ease) infinite}
+@keyframes line{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:820px){
+  .hero{min-height:100svh;align-items:end}
+  .hero-photo img{object-position:62% 40%}
+  .hero-veil{background:linear-gradient(0deg,rgba(251,248,243,.96) 0%,rgba(251,248,243,.75) 38%,rgba(251,248,243,0) 70%)}
+}
+
+/* ============ MARQUEE ============ */
+.marquee{border-top:1px solid var(--sand-200);border-bottom:1px solid var(--sand-200);overflow:hidden;padding:18px 0;background:var(--cream-0)}
+.marquee .track{display:flex;gap:4rem;width:max-content;animation:marquee 40s linear infinite}
+.marquee span{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe-700);display:flex;align-items:center;gap:4rem;white-space:nowrap}
+.marquee span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--clay)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ============ SECTIONS ============ */
+section.block{padding:var(--section) 0}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:clamp(48px,6vw,90px)}
+.head h2{margin-top:1rem}
+@media(max-width:820px){.head{grid-template-columns:1fr}}
+.rule{height:1px;background:var(--sand-200);margin:2rem 0}
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.12s}.reveal[data-d="2"]{transition-delay:.24s}.reveal[data-d="3"]{transition-delay:.36s}
+
+/* ---- format cards with photos ---- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,32px)}
+@media(max-width:820px){.cards{grid-template-columns:1fr}}
+.card{position:relative;background:var(--sand-100);border-radius:var(--arch);overflow:hidden;clip-path:inset(0 round 999px 999px 0 0);
+  box-shadow:inset 0 0 0 1px var(--sand-200);transition:transform .8s var(--ease),box-shadow .8s var(--ease)}
+.card:hover{transform:translateY(-8px);box-shadow:inset 0 0 0 1px var(--halo),0 40px 70px -40px rgba(62,52,44,.35),0 0 80px -20px var(--halo)}
+.card .media{aspect-ratio:4/5;overflow:hidden;position:relative}
+.card .media img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1.6s var(--ease)}
+.card:hover .media img{transform:scale(1.12)}
+.card .media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--sand-100) 0%,rgba(243,237,227,0) 28%)}
+.card .body{padding:8px clamp(24px,2.6vw,40px) 40px}
+.card h3{margin-bottom:.8rem}
+.card p{color:var(--taupe-700);font-size:.95rem}
+.card .meta{display:flex;gap:1.2rem;margin-top:1.2rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe-500)}
+
+/* ---- interior photos ---- */
+.interior{background:var(--sand-100)}
+.photo-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:stretch}
+.photo-grid>*{min-width:0;width:100%;justify-self:stretch}
+@media(max-width:820px){.photo-grid{grid-template-columns:1fr}}
+.photo{position:relative;border-radius:var(--arch);overflow:hidden;aspect-ratio:3/4;isolation:isolate;clip-path:inset(0 round 999px 999px 0 0);background:#E5DAC8}
+.photo.wide{aspect-ratio:4/5}
+@media(min-width:821px){.photo.wide{aspect-ratio:auto;height:100%;min-height:640px}}
+.photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 7s var(--ease)}
+.photo.in img{transform:scale(1)}
+.photo::after{content:"";position:absolute;inset:0;border-radius:var(--arch);box-shadow:inset 0 0 0 1px rgba(245,217,166,.7),inset 0 0 60px rgba(245,217,166,.25);pointer-events:none;z-index:2}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 24px;background:linear-gradient(0deg,rgba(38,32,27,.55),transparent);color:var(--cream-0);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;z-index:3}
+.photo-side{display:flex;flex-direction:column;justify-content:space-between;gap:2rem}
+.stat{display:flex;gap:1.5rem;align-items:baseline;border-top:1px solid var(--sand-300);padding-top:1.2rem}
+.stat b{font-family:var(--serif);font-size:clamp(2.6rem,4vw,4rem);font-weight:300;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--taupe-700);font-size:.9rem;max-width:20ch}
+
+/* ---- movement: the collage becomes a pose switcher ---- */
+.move{position:relative;overflow:hidden}
+.move .bg-arch{position:absolute;left:50%;top:8%;transform:translateX(-50%);width:min(720px,80vw);height:90%;border-radius:var(--arch);background:linear-gradient(180deg,#F1E9DB,#F7F1E8);animation:glow 9s ease-in-out infinite;pointer-events:none}
+@keyframes glow{
+  0%,100%{box-shadow:inset 0 0 0 1px rgba(245,217,166,.8),inset 0 0 40px 0 rgba(245,217,166,.7),0 0 80px -10px rgba(245,217,166,.9)}
+  50%{box-shadow:inset 0 0 0 1px rgba(245,217,166,1),inset 0 0 60px 0 rgba(245,217,166,.95),0 0 120px -10px rgba(245,217,166,1)}
+}
+.move .inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:820px){.move .inner{grid-template-columns:1fr}}
+.poses{list-style:none}
+.poses li{border-top:1px solid var(--sand-300);padding:18px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:padding .5s var(--ease)}
+.poses li:last-child{border-bottom:1px solid var(--sand-300)}
+.poses li .t{font-family:var(--serif);font-size:clamp(1.4rem,2vw,1.9rem);color:var(--ink);transition:color .4s}
+.poses li .d{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe-500)}
+.poses li:hover,.poses li.active{padding-left:14px}
+.poses li.active .t{color:var(--clay)}
+.poser-wrap{display:grid;place-items:center}
+.poser{
+  width:min(440px,84vw);aspect-ratio:3/4;border-radius:var(--arch);overflow:hidden;clip-path:inset(0 round 999px 999px 0 0);
+  box-shadow:0 60px 90px -50px rgba(62,52,44,.45);position:relative;background:var(--sand-200);
+}
+.poser img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transform:scale(1.1);
+  transition:opacity 1.2s var(--ease),transform 7s var(--ease)}
+.poser img.show{opacity:1;transform:scale(1)}
+.poser::before{content:"";position:absolute;inset:0;border-radius:var(--arch);box-shadow:inset 0 0 0 1px rgba(245,217,166,.8),inset 0 0 50px rgba(245,217,166,.25);z-index:2}
+.poser::after{content:attr(data-cap);position:absolute;left:0;right:0;bottom:0;padding:16px 22px;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream-0);background:linear-gradient(0deg,rgba(38,32,27,.5),transparent);font-weight:500;z-index:2}
+.poser-wrap .float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ---- gallery: film strip of reformers and props ---- */
+.gallery{background:var(--sand-100);overflow:hidden}
+.strip{overflow:hidden;margin-top:clamp(32px,4vw,56px);-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip-track{display:flex;gap:clamp(14px,1.6vw,24px);width:max-content;align-items:flex-end;animation:strip 70s linear infinite}
+.strip:hover .strip-track{animation-play-state:paused}
+@keyframes strip{to{transform:translateX(-50%)}}
+.frame{position:relative;flex:none;width:clamp(200px,22vw,320px);aspect-ratio:3/4;border-radius:var(--arch);overflow:hidden;clip-path:inset(0 round 999px 999px 0 0);background:var(--sand-200)}
+.frame.land{width:clamp(260px,30vw,440px);aspect-ratio:4/3;border-radius:18px;clip-path:inset(0 round 18px);align-self:center}
+.frame img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 1.6s var(--ease)}
+.frame:hover img{transform:scale(1.1)}
+.frame figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-0);background:linear-gradient(0deg,rgba(38,32,27,.55),transparent);font-weight:500}
+
+/* ---- pricing ---- */
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,32px)}
+@media(max-width:820px){.prices{grid-template-columns:1fr}}
+.price{border:1px solid var(--sand-200);padding:clamp(28px,3vw,44px);border-radius:24px;background:var(--cream-0);transition:border-color .5s,box-shadow .8s var(--ease),transform .8s var(--ease);display:flex;flex-direction:column;gap:1.2rem}
+.price:hover{border-color:var(--clay);transform:translateY(-6px);box-shadow:0 40px 60px -40px rgba(62,52,44,.3)}
+.price .amount{font-family:var(--serif);font-size:clamp(2.6rem,4vw,3.8rem);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.price .amount small{font-size:.4em;color:var(--taupe-500);letter-spacing:.05em;margin-left:.2em}
+.price ul{list-style:none;color:var(--taupe-700);font-size:.92rem;display:grid;gap:.5rem}
+.price ul li::before{content:"— ";color:var(--clay)}
+.price .btn{align-self:flex-start;margin-top:auto}
+.price.featured{background:var(--sand-100);border-color:var(--halo);box-shadow:0 0 80px -30px var(--halo)}
+
+/* ---- contact ---- */
+.contact{background:var(--sand-100)}
+.contact .grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:820px){.contact .grid{grid-template-columns:1fr}}
+form{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--taupe-500);font-weight:500}
+.field input,.field select{font:inherit;font-weight:300;padding:14px 18px;border-radius:999px;border:1px solid var(--sand-300);background:var(--cream-0);color:var(--ink);outline:none;transition:border-color .4s,box-shadow .4s}
+.field input:focus,.field select:focus{border-color:var(--clay);box-shadow:0 0 0 4px rgba(245,217,166,.35)}
+.note{font-size:.8rem;color:var(--taupe-500)}
+
+/* ---- footer ---- */
+footer{background:var(--ink);color:var(--sand-200);padding:clamp(64px,8vw,120px) 0 40px;position:relative;overflow:hidden}
+footer .big{font-family:var(--serif);font-size:clamp(5rem,22vw,20rem);letter-spacing:.08em;line-height:.8;color:var(--sand-200);opacity:.9;font-weight:300;white-space:nowrap;text-align:center}
+footer .big span{display:inline-block;transition:transform .8s var(--ease),color .8s}
+footer .big:hover span{color:var(--halo)}
+footer .big span:hover{transform:translateY(-12px)}
+footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-top:clamp(40px,6vw,80px);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe-500)}
+footer .row a:hover{color:var(--halo)}
+footer .credit{margin-top:1.4rem;font-size:.66rem;letter-spacing:.12em;color:#6F6155}
+footer .glow{position:absolute;left:50%;bottom:-40%;transform:translateX(-50%);width:60vw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(245,217,166,.16),transparent 60%);pointer-events:none;animation:breathe 8s ease-in-out infinite}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero h1 span,.hero-sub,.loader .word span{opacity:1;transform:none}
+  .js .reveal{opacity:1;transform:none}
+  .hero-photo img,.photo img{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PRELOADER ===== -->
+<div class="loader" id="loader">
+  <div class="halo"></div>
+  <div class="word"><span>A</span><span>R</span><span>C</span><span>A</span></div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <a href="#top" class="logo">ARCA<small>reformer pilates</small></a>
+  <ul>
+    <li><a href="#about">Форматы</a></li>
+    <li><a href="#space">Пространство</a></li>
+    <li><a href="#move">Движение</a></li>
+    <li><a href="#gallery">Инвентарь</a></li>
+    <li><a href="#price">Абонементы</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <a href="#contact" class="btn"><i class="dot"></i>Записаться</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-par" id="hero-par">
+    <div class="hero-photo"><img src="img/straps.jpg" alt="Девушка на реформере с ногами в ремнях на фоне подсвеченных арок"></div>
+  </div>
+  <div class="hero-veil"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-text">
+    <h1 aria-label="ARCA"><span>A</span><span>R</span><span>C</span><span>A</span></h1>
+    <div class="hero-sub">
+      <p class="tag">Студия пилатеса на реформерах — свет, форма и дыхание в одном движении.</p>
+      <a href="#contact" class="btn solid"><i class="dot" style="background:var(--halo)"></i>Первое занятие</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>scroll</span><i></i></div>
+</header>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Reformer</span><span>Дыхание</span><span>Форма</span><span>Свет</span><span>Осанка</span><span>Мини-группы</span><span>Индивидуально</span>
+    <span>Reformer</span><span>Дыхание</span><span>Форма</span><span>Свет</span><span>Осанка</span><span>Мини-группы</span><span>Индивидуально</span>
+  </div>
+</div>
+
+<!-- ===== FORMATS ===== -->
+<section class="block" id="about">
+  <div class="container">
+    <div class="head">
+      <div class="reveal">
+        <p class="eyebrow">Форматы</p>
+        <h2>Тихое место<br>для <em>сильного</em> тела</h2>
+      </div>
+      <p class="lead reveal" data-d="1">ARCA — камерная студия на восемь реформеров. Мягкий свет, тёплые стены и точная работа с телом: без спешки, без шума, с вниманием к каждому позвонку.</p>
+    </div>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="media"><img src="img/studio-vases.jpg" alt="Ряд реформеров у подсвеченных арок с керамическими вазами" loading="lazy"></div>
+        <div class="body">
+          <h3>Reformer Group</h3>
+          <p>До шести человек на занятии. Тренер видит каждого, корректирует технику и подбирает нагрузку под ваш уровень.</p>
+          <div class="meta"><span>55 мин</span><span>до 6 человек</span></div>
+        </div>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="media"><img src="img/leg-up.jpg" alt="Девушка на реформере поднимает ногу вверх, опираясь на дугу" loading="lazy"></div>
+        <div class="body">
+          <h3>Private</h3>
+          <p>Персональные сессии: восстановление после травм, работа с осанкой, подготовка к спорту или просто ваш темп.</p>
+          <div class="meta"><span>55 мин</span><span>1 на 1</span></div>
+        </div>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="media"><img src="img/ring-ball.jpg" alt="Кольцо, малый мяч и утяжелители на каретке реформера" loading="lazy"></div>
+        <div class="body">
+          <h3>Props &amp; Flow</h3>
+          <p>Мяч, кольцо, утяжелители на лодыжки — плавный поток упражнений на реформере и на полу, чтобы тело дышало.</p>
+          <div class="meta"><span>55 мин</span><span>до 4 человек</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPACE ===== -->
+<section class="block interior" id="space">
+  <div class="container">
+    <div class="head">
+      <div class="reveal">
+        <p class="eyebrow">Пространство</p>
+        <h2>Арки, свет<br>и <em>ряд</em> реформеров</h2>
+      </div>
+      <p class="lead reveal" data-d="1">Штукатурка цвета песка, подсвеченные арки и белые реформеры с бежевой кожей. Интерьер, в котором хочется замедлиться ещё до начала занятия.</p>
+    </div>
+    <div class="photo-grid">
+      <figure class="photo wide reveal">
+        <img src="img/studio-row.jpg" alt="Ряд реформеров вдоль стены с подсвеченными арочными зеркалами и окнами" loading="lazy">
+        <figcaption class="cap">Главный зал · 8 реформеров</figcaption>
+      </figure>
+      <div class="photo-side">
+        <figure class="photo reveal" data-d="1">
+          <img src="img/reformer-detail.jpg" alt="Каретка реформера с бежевыми плечевыми упорами, вид сверху" loading="lazy">
+          <figcaption class="cap">Реформер · детали</figcaption>
+        </figure>
+        <div class="reveal" data-d="2">
+          <div class="stat"><b>8</b><span>реформеров в главном зале</span></div>
+          <div class="stat"><b>6</b><span>человек максимум в группе</span></div>
+          <div class="stat"><b>55</b><span>минут — длительность занятия</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MOVEMENT ===== -->
+<section class="block move" id="move">
+  <div class="bg-arch"></div>
+  <div class="container inner">
+    <div>
+      <p class="eyebrow reveal">Движение</p>
+      <h2 class="reveal" data-d="1" style="margin:1rem 0 2.4rem">Четыре опоры<br><em>каждой</em> сессии</h2>
+      <ul class="poses reveal" data-d="2" id="poses">
+        <li class="active" data-pose="0" data-cap="Ноги в ремнях"><span class="t">Ноги в ремнях</span><span class="d">Straps</span></li>
+        <li data-pose="1" data-cap="Мост"><span class="t">Мост</span><span class="d">Core</span></li>
+        <li data-pose="2" data-cap="Планка"><span class="t">Планка</span><span class="d">Control</span></li>
+        <li data-pose="3" data-cap="Баланс"><span class="t">Баланс</span><span class="d">Balance</span></li>
+      </ul>
+      <p class="note" style="margin-top:1.6rem">Наведите на упражнение — кадр сменится.</p>
+    </div>
+    <div class="poser-wrap reveal" data-d="1">
+      <div class="float">
+        <div class="poser" id="poser" data-cap="Ноги в ремнях">
+          <img class="show" data-pose="0" src="img/straps.jpg" alt="Девушка лежит на реформере с ногами в ремнях">
+          <img data-pose="1" src="img/bridge.jpg" alt="Девушка в мосте на реформере, стопы на дуге" loading="lazy">
+          <img data-pose="2" src="img/plank.jpg" alt="Девушка в планке на реформере, стопы на дуге" loading="lazy">
+          <img data-pose="3" src="img/leg-up.jpg" alt="Девушка на реформере поднимает ногу вверх" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section class="block gallery" id="gallery">
+  <div class="container">
+    <div class="head" style="margin-bottom:0">
+      <div class="reveal">
+        <p class="eyebrow">Инвентарь</p>
+        <h2>Реформеры, мячи<br>и <em>кольца</em></h2>
+      </div>
+      <p class="lead reveal" data-d="1">Белые реформеры с бежевой кожей, кольца, малые мячи, утяжелители и коврики. Всё, что нужно, чтобы каждое занятие было разным.</p>
+    </div>
+  </div>
+  <div class="strip reveal" data-d="2" aria-label="Галерея: реформеры и инвентарь">
+    <div class="strip-track">
+      <figure class="frame"><img src="img/dumbbells.jpg" alt="Бежевые гантели на каретке реформера в солнечном свете" loading="lazy"><figcaption>Утяжелители</figcaption></figure>
+      <figure class="frame land"><img src="img/studio-row.jpg" alt="Ряд реформеров у арочных зеркал" loading="lazy"><figcaption>Главный зал</figcaption></figure>
+      <figure class="frame"><img src="img/ring-ball.jpg" alt="Кольцо, мяч и утяжелители на реформере" loading="lazy"><figcaption>Кольцо и мяч</figcaption></figure>
+      <figure class="frame land"><img src="img/plank.jpg" alt="Девушка в планке на реформере" loading="lazy"><figcaption>Планка</figcaption></figure>
+      <figure class="frame"><img src="img/mats.jpg" alt="Свёрнутые бежевые коврики" loading="lazy"><figcaption>Коврики</figcaption></figure>
+      <figure class="frame land"><img src="img/studio-vases.jpg" alt="Реформеры у арок с керамическими вазами" loading="lazy"><figcaption>Арки</figcaption></figure>
+      <figure class="frame"><img src="img/reformer-detail.jpg" alt="Плечевые упоры реформера, вид сверху" loading="lazy"><figcaption>Каретка</figcaption></figure>
+      <figure class="frame land"><img src="img/bridge.jpg" alt="Девушка в мосте на реформере" loading="lazy"><figcaption>Мост</figcaption></figure>
+
+      <figure class="frame" aria-hidden="true"><img src="img/dumbbells.jpg" alt="" loading="lazy"><figcaption>Утяжелители</figcaption></figure>
+      <figure class="frame land" aria-hidden="true"><img src="img/studio-row.jpg" alt="" loading="lazy"><figcaption>Главный зал</figcaption></figure>
+      <figure class="frame" aria-hidden="true"><img src="img/ring-ball.jpg" alt="" loading="lazy"><figcaption>Кольцо и мяч</figcaption></figure>
+      <figure class="frame land" aria-hidden="true"><img src="img/plank.jpg" alt="" loading="lazy"><figcaption>Планка</figcaption></figure>
+      <figure class="frame" aria-hidden="true"><img src="img/mats.jpg" alt="" loading="lazy"><figcaption>Коврики</figcaption></figure>
+      <figure class="frame land" aria-hidden="true"><img src="img/studio-vases.jpg" alt="" loading="lazy"><figcaption>Арки</figcaption></figure>
+      <figure class="frame" aria-hidden="true"><img src="img/reformer-detail.jpg" alt="" loading="lazy"><figcaption>Каретка</figcaption></figure>
+      <figure class="frame land" aria-hidden="true"><img src="img/bridge.jpg" alt="" loading="lazy"><figcaption>Мост</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICE ===== -->
+<section class="block" id="price">
+  <div class="container">
+    <div class="head">
+      <div class="reveal">
+        <p class="eyebrow">Абонементы</p>
+        <h2>Просто<br>и <em>прозрачно</em></h2>
+      </div>
+      <p class="lead reveal" data-d="1">Никаких скрытых условий. Заморозка абонемента — по запросу, первое занятие — со скидкой.</p>
+    </div>
+    <div class="prices">
+      <div class="price reveal">
+        <p class="eyebrow">Знакомство</p>
+        <div class="amount">2 500<small>₽</small></div>
+        <ul><li>1 групповое занятие</li><li>Знакомство с реформером</li><li>Оценка осанки</li></ul>
+        <a href="#contact" class="btn"><i class="dot"></i>Выбрать</a>
+      </div>
+      <div class="price featured reveal" data-d="1">
+        <p class="eyebrow">8 занятий</p>
+        <div class="amount">22 000<small>₽</small></div>
+        <ul><li>Группа до 6 человек</li><li>Действует 45 дней</li><li>Заморозка 14 дней</li></ul>
+        <a href="#contact" class="btn solid"><i class="dot" style="background:var(--halo)"></i>Выбрать</a>
+      </div>
+      <div class="price reveal" data-d="2">
+        <p class="eyebrow">Private</p>
+        <div class="amount">6 000<small>₽</small></div>
+        <ul><li>Персональная сессия 55 мин</li><li>Индивидуальная программа</li><li>Любое время по договорённости</li></ul>
+        <a href="#contact" class="btn"><i class="dot"></i>Выбрать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="block contact" id="contact">
+  <div class="container grid">
+    <div class="reveal">
+      <p class="eyebrow">Запись</p>
+      <h2 style="margin:1rem 0 1.6rem">Приходите<br>на <em>первое</em> занятие</h2>
+      <p class="lead">Мы напишем в течение часа, подберём время и расскажем, что взять с собой. Спойлер: только носки.</p>
+      <div class="rule"></div>
+      <p style="color:var(--taupe-700)">Пн — Вс, 08:00 — 22:00<br>Москва, Большая Дмитровка, 12<br><a href="tel:+79990000000">+7 999 000-00-00</a></p>
+    </div>
+    <form class="reveal" data-d="1" id="form">
+      <div class="field"><label for="name">Имя</label><input id="name" type="text" placeholder="Как к вам обращаться" required></div>
+      <div class="field"><label for="phone">Телефон</label><input id="phone" type="tel" placeholder="+7" required></div>
+      <div class="field"><label for="fmt">Формат</label>
+        <select id="fmt"><option>Групповое занятие</option><option>Персональная сессия</option><option>Ещё не знаю</option></select>
+      </div>
+      <button class="btn solid" type="submit" style="justify-content:center;margin-top:6px"><i class="dot" style="background:var(--halo)"></i><span>Записаться</span></button>
+      <p class="note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="glow"></div>
+  <div class="container">
+    <div class="big" aria-label="ARCA"><span>A</span><span>R</span><span>C</span><span>A</span></div>
+    <div class="row">
+      <span>© 2026 ARCA reformer pilates</span>
+      <span><a href="#">Instagram</a> &nbsp;·&nbsp; <a href="#">Telegram</a> &nbsp;·&nbsp; <a href="#">WhatsApp</a></span>
+      <span>Москва</span>
+    </div>
+    <p class="credit">Фотографии — студия ARCA.</p>
+  </div>
+</footer>
+
+<script>
+document.body.classList.add('js');
+// Preloader
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('done'),1100));
+
+// Nav background on scroll
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// Hero parallax: the photo follows the cursor a little
+const par=document.getElementById('hero-par');
+addEventListener('mousemove',e=>{
+  const x=(e.clientX/innerWidth-.5)*-16, y=(e.clientY/innerHeight-.5)*-10;
+  par.style.setProperty('--px',x+'px');par.style.setProperty('--py',y+'px');
+});
+
+// Reveal on scroll (photos get their Ken Burns via the same .in class)
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Pose switcher: the collage slides between its four frames
+const poses=document.querySelectorAll('#poses li'), poser=document.getElementById('poser');
+function setPose(i){
+  poses.forEach(l=>{const on=l.dataset.pose==i;l.classList.toggle('active',on);if(on)poser.dataset.cap=l.dataset.cap});
+  poser.querySelectorAll('img').forEach(im=>im.classList.toggle('show',im.dataset.pose==i));
+}
+poses.forEach(l=>{l.addEventListener('mouseenter',()=>setPose(l.dataset.pose));l.addEventListener('click',()=>setPose(l.dataset.pose))});
+let cur=0,hover=false;
+const list=document.getElementById('poses');
+list.addEventListener('mouseenter',()=>hover=true);
+list.addEventListener('mouseleave',()=>hover=false);
+setInterval(()=>{if(!hover){cur=(cur+1)%4;setPose(cur)}},4200);
+
+// Form
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  e.target.querySelector('button span').textContent='Спасибо, мы свяжемся с вами';
+});
+</script>
+</body>
+</html>
