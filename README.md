@@ -1,5 +1,8 @@
 # ARCA — сайт студии пилатеса на реформерах
 
+**Живой сайт:** https://kirgenevazukhra.github.io/arca-pilates/
+
+
 - `index.html` — весь сайт в одном файле (HTML + CSS + JS). Откройте в браузере.
 - `DESIGN-SYSTEM.md` — разбор референсов и токены дизайн-системы.
 
